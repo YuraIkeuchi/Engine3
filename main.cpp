@@ -7,7 +7,6 @@
 #include<DirectXMath.h>
 #include<d3dcompiler.h>
 #define DIRECTiNPUT_VERSION 
-
 #include<DirectXTex.h>
 #include<wrl.h>
 #include "Input.h"
