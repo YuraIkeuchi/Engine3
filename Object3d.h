@@ -141,7 +141,7 @@ public: // ƒƒ“ƒoŠÖ”
 	//‰Šú‰»
 	bool Initialize();
 	/// –ˆƒtƒŒ[ƒ€ˆ—
-	void Update(XMMATRIX matview);
+	void Update();
 	void Shot(int isAlive, XMFLOAT3 position1, XMFLOAT3 position2, int RandLane, int RandHigh, int RandZ);
 	bool Collide(XMFLOAT3 position1, XMFLOAT3 position2, XMFLOAT3 scale, int isAlive, int breakCount, int HP);
 	/// •`‰æ

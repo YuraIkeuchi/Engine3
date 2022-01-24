@@ -26,7 +26,7 @@ CD3DX12_CPU_DESCRIPTOR_HANDLE Object3d::cpuDescHandleSRV;
 CD3DX12_GPU_DESCRIPTOR_HANDLE Object3d::gpuDescHandleSRV;
 XMMATRIX Object3d::matView{};
 XMMATRIX Object3d::matProjection{};
-XMFLOAT3 Object3d::eye = { 0, 0, -5.0f };
+XMFLOAT3 Object3d::eye = { 0, 3.0f, -10.0f };
 XMFLOAT3 Object3d::target = { 0, 0, 0 };
 XMFLOAT3 Object3d::up = { 0, 1, 0 };
 D3D12_VERTEX_BUFFER_VIEW Object3d::vbView{};
@@ -439,7 +439,7 @@ bool Object3d::Initialize()
 	return true;
 }
 
-void Object3d::Update(XMMATRIX matview)
+void Object3d::Update()
 {
 	HRESULT result;
 	XMMATRIX matScale, matRot, matTrans;
@@ -468,7 +468,7 @@ void Object3d::Update(XMMATRIX matview)
 	ConstBufferDataB0* constMap = nullptr;
 	result = constBuffB0->Map(0, nullptr, (void**)&constMap);
 	//constMap->color = color;
-	constMap->mat = matWorld * matview * matProjection;	// s—ñ‚Ì‡¬
+	constMap->mat = matWorld * matView * matProjection;	// s—ñ‚Ì‡¬
 	constBuffB0->Unmap(0, nullptr);
 
 }
