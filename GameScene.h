@@ -7,6 +7,8 @@
 #include "Object3d.h"
 #include "Audio.h"
 #include "DebugText.h"
+#include "CollisionPrimitive.h"
+#include "Collision.h"
 
 /// ゲームシーン
 class GameScene
@@ -45,6 +47,7 @@ private://メンバ変数
 	Input* input = nullptr;
 	Audio* audio = nullptr;
 	DebugText debugText;
+	Collision* collision;
 	///ゲームシーン用
 	Sprite* spriteBG = nullptr;
 
@@ -60,5 +63,18 @@ private://メンバ変数
 	Object3d* objPlayer = nullptr;
 	Object3d* objFloor = nullptr;
 	XMFLOAT3 PlayerPosition = { -5.0f,0.0f,0.0f };
+	XMFLOAT3 FighterPosition = { 5.0f,0.0f,0.0f };
+	XMFLOAT3 FloorPosition = { 0.0f,-2.0f,0.0f };
+	//当たり判定 球
+	Sphere sphere;
+	//当たり判定 平面
+	Plane plane;
+	//当たり判定 三角形
+	Triangle triangle;
+	//当たり判定 レイ
+	Ray ray;
+
+
+
 };
 

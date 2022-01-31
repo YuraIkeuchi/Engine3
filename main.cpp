@@ -107,6 +107,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	winApp->Finalize();
 	//解放処理
 	delete input;
+	delete audio;
 	delete dxCommon;
 	delete winApp;
 	return 0;

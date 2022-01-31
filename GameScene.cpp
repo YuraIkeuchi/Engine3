@@ -32,7 +32,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input, Audio* audio)
 	this->input = input;
 	this->audio = audio;
 
-
 	// デバッグテキスト用テクスチャ読み込み
 	if (!Sprite::LoadTexture(debugTextTexNumber, L"Resources/debugfont.png")) {
 		assert(0);
@@ -46,6 +45,14 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input, Audio* audio)
 		assert(0);
 		return;
 	}
+
+	if (!audio->Initialize()) {
+		assert(0);
+		return;
+	}
+
+	audio->LoadSound(0, "Resources/Sound/kadai_BGM.wav");
+	audio->LoopWave(0, 0.3);
 	// 背景スプライト生成
 	spriteBG = Sprite::Create(1, { 0.0f,0.0f });
 	//spriteBG->SetSize({ 1280,720 });
@@ -65,15 +72,14 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input, Audio* audio)
 	modelFighter = Model::LoadFromOBJ("chr_sword");
 	modelFloor = Model::LoadFromOBJ("floor");
 
-
 	objSkydome->SetModel(modelSkydome);
 	objGround->SetModel(modelGround);
 	objPlayer->SetModel(modelPlayer);
 	objFighter->SetModel(modelFighter);
 	objFloor->SetModel(modelFloor);
-	objFloor->SetPosition({ 0,-2,0 });
+	objFloor->SetPosition(FloorPosition);
 	objPlayer->SetPosition(PlayerPosition);
-	objFighter->SetPosition({ 5.0f,0.0f,0.0f });
+	objFighter->SetPosition(FighterPosition);
 	objFloor->SetScale({ 3.0f,1.0f,3.0f });
 }
 
@@ -111,19 +117,37 @@ void GameScene::Update()
 		objPlayer->SetPosition(PlayerPosition);
 	}
 
+	bool hit = collision->SphereCollision(PlayerPosition.x, PlayerPosition.y, PlayerPosition.z, 0.5, FighterPosition.x, FighterPosition.y, FighterPosition.z, 0.5);
+
+	if (hit) {
+			debugText.Print("Hit", 5.0, 5.0, 5.0f);
+	}
+
 	objSkydome->Update();
 	objGround->Update();
 	objPlayer->Update();
 	objFighter->Update();
 	objFloor->Update();
-	debugText.Print("Hello", 5.0, 5.0, 5.0f);
 }
 
 void GameScene::Draw()
 {
 	// コマンドリストの取得
 	ID3D12GraphicsCommandList* cmdList = dxCommon->GetCmdList();
-
+	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug"))
+	{
+		
+		if (ImGui::TreeNode("Field"))
+		{
+			ImGui::SliderFloat("Position.x", &PlayerPosition.x, 50, -50);
+			ImGui::SliderFloat("Position.y", &PlayerPosition.y, 50, -50);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();
 #pragma region 背景スプライト描画
 	// 背景スプライト描画前処理
 	Sprite::PreDraw(cmdList);
@@ -145,7 +169,7 @@ void GameScene::Draw()
 	//objGround->Draw();
 	objPlayer->Draw();
 	objFighter->Draw();
-	objFloor->Draw();
+	//objFloor->Draw();
 	// 3Dオブジェクト描画後処理
 	Object3d::PostDraw();
 #pragma endregion
