@@ -6,6 +6,7 @@
 #include "Sprite.h"
 #include "Object3d.h"
 #include "Audio.h"
+#include "DebugText.h"
 
 /// ゲームシーン
 class GameScene
@@ -43,16 +44,21 @@ private://メンバ変数
 	DirectXCommon* dxCommon = nullptr;
 	Input* input = nullptr;
 	Audio* audio = nullptr;
-
+	DebugText debugText;
 	///ゲームシーン用
 	Sprite* spriteBG = nullptr;
 
 	Model* modelSkydome = nullptr;
 	Model* modelGround = nullptr;
 	Model* modelFighter = nullptr;
+	Model* modelPlayer = nullptr;
+	Model* modelFloor = nullptr;
 
 	Object3d* objSkydome = nullptr;
 	Object3d* objGround = nullptr;
 	Object3d* objFighter = nullptr;
+	Object3d* objPlayer = nullptr;
+	Object3d* objFloor = nullptr;
+	XMFLOAT3 PlayerPosition = { -5.0f,0.0f,0.0f };
 };
 

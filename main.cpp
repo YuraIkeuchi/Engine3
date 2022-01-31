@@ -36,9 +36,7 @@ using namespace Microsoft::WRL;
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 #pragma region DirectXの初期化
-	const int window_width = 1920;
-	const int window_height = 1080;
-
+	
 	WinApp* winApp = nullptr;
 	//初期化
 	winApp = new WinApp();
@@ -79,7 +77,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//射影変換行列の作り
 
 	// スプライト静的初期化
-	if (!Sprite::StaticInitialize(dxCommon->GetDev(), window_width, window_height)) {
+	if (!Sprite::StaticInitialize(dxCommon->GetDev(), WinApp::window_width, WinApp::window_height)) {
 		assert(0);
 		return 1;
 	}
